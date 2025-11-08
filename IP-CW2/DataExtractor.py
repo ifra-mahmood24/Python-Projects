@@ -42,6 +42,5 @@ class DataExtractor:
     def verifyExtension(doc):
         pass
 
-    def getContent(doc):
-        pass
-    
+    def getContent(self, doc):
+        return self.df[self.df["subject_doc_id"] == doc]
