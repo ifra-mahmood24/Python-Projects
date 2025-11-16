@@ -10,7 +10,7 @@ def create_board():
 
 def print_board(board):
     # Print column numbers
-    print(' '.join(str(i+1) for i in range(7)))
+    print('',' '.join(str(i+1) for i in range(7)))
     
     # Print board rows
     for row in board:

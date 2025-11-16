@@ -1,3 +1,5 @@
+from turtle import *
+
 def sum(n):
     sum = 0
     for i in range(n+1):
@@ -27,3 +29,10 @@ def remove_adjacent(nums):
     return nums
 
 print(remove_adjacent([5,3,3,7,9,1,1])) #why no work TT
+
+
+for steps in range(100):
+    for c in ('blue', 'red', 'green'):
+        color(c)
+        forward(steps)
+        right(30)
