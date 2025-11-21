@@ -1,5 +1,4 @@
 import json
-import httpx
 import pandas
 
 class DataExtractor:
@@ -10,7 +9,7 @@ class DataExtractor:
         self.data = None
 
     def load(self):
-        text = self.loadFromUrl()
+        text = self.loadFromFile()
         self.data = self.parseJSON(text)
         self.df = pandas.DataFrame(self.data)
         return self.df
@@ -27,16 +26,12 @@ class DataExtractor:
             print("Failed to parse")
             return []
             
-    def loadFromUrl(self):
+    def loadFromFile(self):
         try:
-            response = httpx.get(self.source)
-            response.raise_for_status()
-            return response.text
-        except httpx.RequestError:
-            print("Failed to load - RequestError")
-            return ""
-        except httpx.HTTPStatusError:
-            print("Failed to load - HTTPStatusError")
+            with open(self.source, "r", encoding="utf-8") as f:
+                return f.read()
+        except FileNotFoundError:
+            print("Failed to load - File not found")
             return ""
 
     def verifyExtension(doc):
