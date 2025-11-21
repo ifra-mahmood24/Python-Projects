@@ -1,10 +1,19 @@
+import matplotlib
+import pandas
+
 class ViewByBrowser:
     def __init__(self):
         pass
 
-    def getBroswer():
-        pass
-        #format the browser part from the visitor_useragent
+    def getUserAgentCounts(self, df):
+        return df["visitor_useragent"].astype(str).value_counts()
+    
+    def getBrowserCounts(self, counts):
+        browser_counts = {}
+        for user_agent, count in counts.items():
+            browser = user_agent.split("/", 1)[0]
+            browser_counts[browser] = browser_counts.get(browser, 0) + count
+        return browser_counts
 
     def displayHistogram():
         pass
