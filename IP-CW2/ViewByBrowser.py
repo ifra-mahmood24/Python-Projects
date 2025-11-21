@@ -1,12 +1,9 @@
-import matplotlib
-import pandas
-
 class ViewByBrowser:
-    def __init__(self):
-        pass
+    def __init__(self, df_copy):
+        self.df_copy = df_copy
 
-    def getUserAgentCounts(self, df):
-        return df["visitor_useragent"].astype(str).value_counts()
+    def getUserAgentCounts(self):
+        return self.df_copy["visitor_useragent"].astype(str).value_counts()
     
     def getBrowserCounts(self, counts):
         browser_counts = {}
