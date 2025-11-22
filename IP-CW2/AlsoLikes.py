@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import os
 class AlsoLikes:
+    def __init__(self, df_copy):
+        self.df_copy = df_copy
+
     read_events = ["pageread", "pagereadtime", "read"]
 
     def getReaders(self, doc_UUID):
@@ -27,7 +30,7 @@ class AlsoLikes:
         doc_id, count = item # item is a tuple (doc_id, count)
         return -count      # negative for descending order
 
-    def sort_by_doc_if(self, item):
+    def sort_by_doc_id(self, item):
         doc_id, count = item
         return doc_id
     
