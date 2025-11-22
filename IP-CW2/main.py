@@ -9,26 +9,31 @@ from GUI import GUI
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-u", "--user_uuid")
-    parser.add_argument("-d", "--doc_uuid")
-    parser.add_argument("-t", "--task_id")
-    parser.add_argument("-f", "--file_name", required=True)
+    parser.add_argument("-u", "--user_uuid", help="Visitor UUID", required=False)
+    parser.add_argument("-d", "--doc_uuid", help="Document UUID", required=False)
+    parser.add_argument("-t", "--task_id", help="Task ID: 2a, 2b, 3a, 3b, 4, 5a, 5b, 6, 7", required=False)
+    parser.add_argument("-f", "--file_name", help="JSON file path", required=False)
 
     args = parser.parse_args()
 
-    loader = DataExtractor(args.file_name)
-    df = loader.load()
+    # when no arguments are given
+    if args.task_id is None and args.file_name is None:
+        GUI()
+        return
+
+    df = None
+    if args.file_name:
+        loader = DataExtractor(args.file_name)
+        df = loader.load()
 
     if args.task_id == "2a":
         v = ViewByCountry(df)
-        c = v.getCountryCounts(args.doc_uuid)
-        print(c)
+        print(v.getCountryCounts(args.doc_uuid))
 
     elif args.task_id == "2b":
         v = ViewByCountry(df)
-        c = v.getCountryCounts(args.doc_uuid)
-        cont = v.getContinentCounts(c)
-        print(cont)
+        counts = v.getCountryCounts(args.doc_uuid)
+        print(v.getContinentCounts(counts))
 
     elif args.task_id == "3a":
         vb = ViewByBrowser(df)
@@ -45,8 +50,8 @@ def main():
 
     elif args.task_id == "5d":
         al = AlsoLikes(df)
-        func = lambda x: -x[1]
-        print(al.alsoLikes(args.doc_uuid, func)[:10])
+        results = al.sort_alsoLikes(args.doc_uuid)
+        print(results)
 
     elif args.task_id == "6":
         al = AlsoLikes(df)
@@ -57,16 +62,6 @@ def main():
         GUI(
             preset_doc=args.doc_uuid,
             preset_user=args.user_uuid,
-            preset_task=(
-                "2a - Views by Country" if args.task_id == "2a" else
-                "2b - Views by Continent" if args.task_id == "2b" else
-                "3a - Browser Histogram" if args.task_id == "3a" else
-                "3b - Simplified Browser Histogram" if args.task_id == "3b" else
-                "4 - Top 10 Avid Readers" if args.task_id == "4" else
-                "5d - Also Likes Top 10" if args.task_id == "5d" else
-                "6 - Generate Also-Likes Graph" if args.task_id == "6" else
-                None
-            ),
             preset_file=args.file_name
         )
 
