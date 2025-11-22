@@ -2,23 +2,15 @@ import graphviz
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import os
+import graphviz
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import os
 class AlsoLikes:
-<<<<<<< Updated upstream
-    def __init__(self):
-        pass
-
-    def getReaders():
-        pass
-
-    def getDocs(reader):
-        pass
-=======
     read_events = ["pageread", "pagereadtime", "read"]
 >>>>>>> Stashed changes
 
 
-<<<<<<< Updated upstream
-=======
     def getReaders(self, doc_UUID):
         readers = self.df_copy[
             (self.df_copy["subject_doc_id"] == doc_UUID) &
@@ -32,7 +24,6 @@ class AlsoLikes:
             (self.df_copy["event_type"].isin(self.read_events))
         ]
         return docs["subject_doc_id"].unique()
->>>>>>> Stashed changes
 
     def sort_by_common_readers(self, item):
         doc_id, count = item # item is a tuple (doc_id, count)
@@ -46,19 +37,6 @@ class AlsoLikes:
         doc_id, count = item
         return count
 
-<<<<<<< Updated upstream
-    # def alsoLikes(mainDoc, sort_func_var):
-    #     lstReaders = getReaders()
-    #     lstDocs = getDocs()
-
-
-
-    def displayGraph():
-        pass
-        
-
-
-=======
     def alsoLikes(self, doc_UUID, sort_func, visitor_UUID = ""):
         if sort_func is None:     # use internal function if none supplied
             sort_func = self.sort_by_common_readers
@@ -99,5 +77,4 @@ class AlsoLikes:
         plt.axis("off")
         plt.title("Also Likes Graph")
         plt.show()
->>>>>>> Stashed changes
 
