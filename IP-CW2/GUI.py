@@ -163,9 +163,10 @@ class GUI:
         elif "5d" in task:
             if not doc:
                 return self.need_doc()
-            results = al.alsoLikes(doc, sort_func=al.sort_by_common_readers) #you might have to change this
-            top10 = results[:10] #also change this
-            self.output_box.insert(tk.END, str(top10)) #and change the second argument of this
+            results = al.sort_alsoLikes(doc) #you might have to change this
+            self.output_box.insert(tk.END, "Top 10 Also-Likes:\n\n")
+            for d, c in results:
+                self.output_box.insert(tk.END, f"{d}   ({c} shared readers)\n") #and change the second argument of this
 
         elif "6" in task:
             if not doc: # no need to touch this until 5d is working

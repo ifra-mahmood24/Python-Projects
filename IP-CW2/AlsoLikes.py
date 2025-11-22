@@ -26,36 +26,42 @@ class AlsoLikes:
         ]
         return docs["subject_doc_id"].unique()
 
-    def sort_by_common_readers(self, item): # you can remove all the sort functions
-        doc_id, count = item # item is a tuple (doc_id, count)
-        return -count      # negative for descending order
+    def sort_by_count_desc(self, item):
+        doc, count = item
+        return -count  # highest count first
+
+    def sort_by_count_asc(self, item):
+        doc, count = item
+        return count  # lowest first
 
     def sort_by_doc_id(self, item):
-        doc_id, count = item
-        return doc_id
-    
-    def sort_by_least_common(self, item):
-        doc_id, count = item
-        return count
+        doc, count = item
+        return doc  # alphabetical
 
-    def alsoLikes(self, doc_UUID, sort_func, visitor_UUID = ""):
-        if sort_func is None:     # use internal function if none supplied
-            sort_func = self.sort_by_common_readers
-        
-        lst_readers = self.getReaders(doc_UUID)
+    def compute_alsoLikes(self, doc_UUID):
         doc_counts = {}
+        readers = self.getReaders(doc_UUID)
+
+        for reader in readers:
+            docs = self.getDocs(reader)
+            for d in docs:
+                if d != doc_UUID:
+                    doc_counts[d] = doc_counts.get(d, 0) + 1
         
-        for reader in lst_readers:
-            lst_docs = self.getDocs(reader)
-            for doc in lst_docs:
-                if doc != doc_UUID:
-                    doc_counts[doc] = doc_counts.get(doc, 0) + 1
-        return sorted(doc_counts.items(), key = sort_func)
+        return list(doc_counts.items())  # return list of (doc, count)
+    
+    def sort_alsoLikes(self, doc_UUID, sort_func=None, visitor_UUID=""):
+        if sort_func is None:
+            sort_func = self.sort_by_count_desc  # default for Task 5d
+
+        pairs = self.compute_alsoLikes(doc_UUID)
+        sorted_pairs = sorted(pairs, key=sort_func)
+        return sorted_pairs[:10]  # keep (doc, count)
 
     def displayGraph(self, docuuid, visuuid="", topN=10): #no need to worry about this function right now because we just need alsoLikes to be working
         from GraphGenerator import GraphGenerator # graphgenerator is another class that defines how exactly the output should look like
         
-        results = self.alsoLikes(docuuid)
+        results = self.sort_alsoLikes(docuuid)
         likedDocs = [doc for doc, _ in results[:topN]]
 
         gg = GraphGenerator(self.df_copy)
