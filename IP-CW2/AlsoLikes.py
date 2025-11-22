@@ -8,8 +8,6 @@ import matplotlib.image as mpimg
 import os
 class AlsoLikes:
     read_events = ["pageread", "pagereadtime", "read"]
->>>>>>> Stashed changes
-
 
     def getReaders(self, doc_UUID):
         readers = self.df_copy[

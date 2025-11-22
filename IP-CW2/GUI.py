@@ -171,7 +171,7 @@ class GUI:
             if not doc:
                 return self.need_doc()
 
-            al = AlsoLikes(self,df)
+            al = AlsoLikes(self.df)
             al.displayGraph(doc, user)
 
 
