@@ -38,10 +38,10 @@ class GUI:
         # Task selection dropdown
         tk.Label(frame_top, text="Select Task:").grid(row=2, column=0, sticky="w")
 
-        self.task_var = tk.StringVar()
+        self.task_var = tk.StringVar() # we have defined which tasks refer to what
         self.task_dropdown = ttk.Combobox(
             frame_top, textvariable=self.task_var, width=42,
-            values=["2a - Views by Country",
+            values=["2a - Views by Country", 
                     "2b - Views by Continent",
                     "3a - Browser Histogram",
                     "3b - Simplified Browser Histogram",
@@ -117,24 +117,24 @@ class GUI:
             messagebox.showerror("Error", "Load data first.")
             return
 
-        task = self.task_var.get()
-        doc = self.doc_entry.get().strip()
-        user = self.user_entry.get().strip()
+        task = self.task_var.get() # which task we want to run
+        doc = self.doc_entry.get().strip() # what docuuid we want to use
+        user = self.user_entry.get().strip() # what useruuid we want to use
 
-        v_country = ViewByCountry(self.df)
-        v_browser = ViewByBrowser(self.df)
-        avid = AvidReaders(self.df)
-        al = AlsoLikes(self.df)
+        v_country = ViewByCountry(self.df) # running the ViewByCountry functionality
+        v_browser = ViewByBrowser(self.df) # running the ViewByBrowser functionality
+        avid = AvidReaders(self.df) # running the avid readers functionality
+        al = AlsoLikes(self.df) # running the also Likes functionality
 
-        self.output_box.delete("1.0", tk.END)
+        self.output_box.delete("1.0", tk.END) # removes previous output when new task is run
 
         # ---------------- TASK LOGIC -----------------------
 
-        if "2a" in task:
+        if "2a" in task: # you select the "2a" value in the Task Selection section
             if not doc:
                 return self.need_doc()
-            counts = v_country.getCountryCounts(doc)
-            self.output_box.insert(tk.END, str(counts))
+            counts = v_country.getCountryCounts(doc) # how many countries have visited the doc
+            self.output_box.insert(tk.END, str(counts)) # the main output that we're displaying is "str(counts)"
             v_country.displayHistogram(counts, f"Views by Country for {doc}")
 
         elif "2b" in task:
@@ -142,33 +142,33 @@ class GUI:
                 return self.need_doc()
             counts = v_country.getCountryCounts(doc)
             cont = v_country.getContinentCounts(counts)
-            self.output_box.insert(tk.END, str(cont))
+            self.output_box.insert(tk.END, str(cont)) # always focus on the second argument of this to find out what the output will be
             v_country.displayHistogram(cont, f"Views by Continent for {doc}")
 
         elif "3a" in task:
             counts = v_browser.getUserAgentCounts()
-            self.output_box.insert(tk.END, str(counts))
+            self.output_box.insert(tk.END, str(counts)) # here output list of browser data
             v_browser.displayHistogram(counts, "Browser Histogram")
 
         elif "3b" in task:
             counts = v_browser.getUserAgentCounts()
             simple = v_browser.getBrowserCounts(counts)
-            self.output_box.insert(tk.END, str(simple))
+            self.output_box.insert(tk.END, str(simple)) # here output is list of browser names
             v_browser.displayHistogram(simple, "Simplified Browser Histogram")
 
         elif "4" in task:
             table = avid.getTableOfReaders()
-            self.output_box.insert(tk.END, str(table))
+            self.output_box.insert(tk.END, str(table)) # output is table
 
         elif "5d" in task:
             if not doc:
                 return self.need_doc()
-            results = al.alsoLikes(doc, sort_func=al.sort_by_common_readers)
-            top10 = results[:10]
-            self.output_box.insert(tk.END, str(top10))
+            results = al.alsoLikes(doc, sort_func=al.sort_by_common_readers) #you might have to change this
+            top10 = results[:10] #also change this
+            self.output_box.insert(tk.END, str(top10)) #and change the second argument of this
 
         elif "6" in task:
-            if not doc:
+            if not doc: # no need to touch this until 5d is working
                 return self.need_doc()
 
             al = AlsoLikes(self.df)

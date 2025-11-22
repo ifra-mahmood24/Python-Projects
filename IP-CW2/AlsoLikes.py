@@ -26,7 +26,7 @@ class AlsoLikes:
         ]
         return docs["subject_doc_id"].unique()
 
-    def sort_by_common_readers(self, item):
+    def sort_by_common_readers(self, item): # you can remove all the sort functions
         doc_id, count = item # item is a tuple (doc_id, count)
         return -count      # negative for descending order
 
@@ -52,8 +52,8 @@ class AlsoLikes:
                     doc_counts[doc] = doc_counts.get(doc, 0) + 1
         return sorted(doc_counts.items(), key = sort_func)
 
-    def displayGraph(self, docuuid, visuuid="", topN=10):
-        from GraphGenerator import GraphGenerator
+    def displayGraph(self, docuuid, visuuid="", topN=10): #no need to worry about this function right now because we just need alsoLikes to be working
+        from GraphGenerator import GraphGenerator # graphgenerator is another class that defines how exactly the output should look like
         
         results = self.alsoLikes(docuuid)
         likedDocs = [doc for doc, _ in results[:topN]]
