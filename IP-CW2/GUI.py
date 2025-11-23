@@ -135,7 +135,7 @@ class GUI:
                 return self.need_doc()
             counts = v_country.getCountryCounts(doc)
             self.output_box.insert(tk.END, str(counts))
-            v_country.displayHistogram(counts, f"Views by Country for {doc}")
+            v_country.displayCountries(counts, f"Views by Country for {doc}")
 
         elif "2b" in task:
             if not doc:
@@ -143,18 +143,18 @@ class GUI:
             counts = v_country.getCountryCounts(doc)
             cont = v_country.getContinentCounts(counts)
             self.output_box.insert(tk.END, str(cont))
-            v_country.displayHistogram(cont, f"Views by Continent for {doc}")
+            v_country.displayContinents(cont, f"Views by Continent for {doc}")
 
         elif "3a" in task:
             counts = v_browser.getUserAgentCounts()
             self.output_box.insert(tk.END, str(counts))
-            v_browser.displayHistogram(counts, "Browser Histogram")
+            v_browser.displayUserAgents(counts, "Browser Histogram")
 
         elif "3b" in task:
             counts = v_browser.getUserAgentCounts()
             simple = v_browser.getBrowserCounts(counts)
             self.output_box.insert(tk.END, str(simple))
-            v_browser.displayHistogram(simple, "Simplified Browser Histogram")
+            v_browser.displaySimplified(simple, "Simplified Browser Histogram")
 
         elif "4" in task:
             table = avid.getTableOfReaders()
@@ -173,7 +173,6 @@ class GUI:
                 return self.need_doc()
 
             al = AlsoLikes(self.df)
-            al.displayGraph(doc, user)
             results = al.sort_alsoLikes(doc, sort_func=al.sort_by_count_desc)
 
             if len(results) == 0:

@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from HistogramGenerator import HistogramGenerator
 class ViewByBrowser:
     def __init__(self, df_copy):
         self.df_copy = df_copy
@@ -13,6 +14,22 @@ class ViewByBrowser:
             browser = user_agent.split("/", 1)[0]
             browser_counts[browser] = browser_counts.get(browser, 0) + count
         return browser_counts
+
+    def displayUserAgents(self, counts):
+        HistogramGenerator.plot(
+            data=counts,
+            title="Browser Histogram",
+            xlabel="Browser (Full User Agent)",
+            ylabel="Number of Visitors"
+        )
+
+    def displaySimplified(self, counts):
+        HistogramGenerator.plot(
+            data=counts,
+            title="Simplified Browser Histogram",
+            xlabel="Browser Name",
+            ylabel="Number of Visitors"
+        )
 
     def displayHistogram(self, data, title="Histogram"):
         if data is None:

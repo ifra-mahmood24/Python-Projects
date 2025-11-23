@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from HistogramGenerator import HistogramGenerator
+
 class ViewByCountry:
     def __init__(self, df_copy):
         self.df_copy = df_copy
@@ -72,6 +74,22 @@ class ViewByCountry:
             continents[continent] = continents.get(continent, 0) + count
         return continents
 
+    def displayCountries(self, counts, doc):
+        HistogramGenerator.plot(
+            data=counts,
+            title=f"Views by Country for {doc}",
+            xlabel="Country",
+            ylabel="Number of Views"
+        )
+
+    def displayContinents(self, counts, doc):
+        HistogramGenerator.plot(
+            data=counts,
+            title=f"Views by Continent for {doc}",
+            xlabel="Continent",
+            ylabel="Number of Views"
+        )
+        
     def displayHistogram(self, data, title="Histogram"):
         if data is None:
             print("No data to display")
