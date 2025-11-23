@@ -163,7 +163,7 @@ class GUI:
         elif "5d" in task:
             if not doc:
                 return self.need_doc()
-            results = al.sort_alsoLikes(doc) 
+            results = al.sort_alsoLikes(doc, sort_func=al.sort_by_count_desc) 
             self.output_box.insert(tk.END, "Top 10 Also-Likes:\n\n")
             for d, c in results:
                 self.output_box.insert(tk.END, f"{d}   ({c} shared readers)\n")
@@ -174,7 +174,7 @@ class GUI:
 
             al = AlsoLikes(self.df)
             al.displayGraph(doc, user)
-            results = al.sort_alsoLikes(doc)
+            results = al.sort_alsoLikes(doc, sort_func=al.sort_by_count_desc)
 
             if len(results) == 0:
                 self.output_box.insert(tk.END, "No related documents found.\n")
