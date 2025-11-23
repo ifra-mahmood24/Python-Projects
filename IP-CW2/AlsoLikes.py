@@ -58,17 +58,13 @@ class AlsoLikes:
         sorted_pairs = sorted(pairs, key=sort_func)
         return sorted_pairs[:10]  # keep (doc, count)
 
-    def displayGraph(self, docuuid, visuuid="", topN=10):
         from GraphGenerator import GraphGenerator
         
-        results = self.alsoLikes(docuuid)
         likedDocs = [doc for doc, _ in results[:topN]]
 
         gg = GraphGenerator(self.df_copy)
         dotFile = gg.write_dot_file(
-            main_doc=docuuid,
             liked_docs=likedDocs,
-            highlight_reader=visuuid,
             filename="also_likes.dot"
         )
 
@@ -76,6 +72,7 @@ class AlsoLikes:
         graph = graphviz.Source.from_file(dotFile)
         png_path = "also_likes.png"
         graph.render(filename="also_likes", format="png", cleanup=True)
+        graph.render(filename="also_likes", format="png", cleanup=True, executable=r"C:\Program Files\Graphviz\bin\dot.exe")
 
 
         img = mpimg.imread(png_path)

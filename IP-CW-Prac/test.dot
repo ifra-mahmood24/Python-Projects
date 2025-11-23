@@ -1,0 +1,3 @@
+diagraph G {
+    a -> b;
+}
