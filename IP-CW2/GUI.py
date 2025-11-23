@@ -57,7 +57,7 @@ class GUI:
         frame_data = tk.Frame(self.window)
         frame_data.pack(pady=10)
 
-        tk.Label(frame_data, text="Load Data from File:").grid(row=0, column=0, sticky="w")
+        tk.Label(frame_data, text="Load Data (URL or File):").grid(row=0, column=0, sticky="w")
 
         self.url_entry = tk.Entry(frame_data, width=45)
         self.url_entry.grid(row=0, column=1, padx=5, pady=3)
@@ -163,28 +163,16 @@ class GUI:
         elif "5d" in task:
             if not doc:
                 return self.need_doc()
-            results = al.sort_alsoLikes(doc) 
-            self.output_box.insert(tk.END, "Top 10 Also-Likes:\n\n")
-            for d, c in results:
-                self.output_box.insert(tk.END, f"{d}   ({c} shared readers)\n")
+            results = al.alsoLikes(doc, sort_func=al.sort_by_common_readers)
+            top10 = results[:10]
+            self.output_box.insert(tk.END, str(top10))
 
         elif "6" in task:
             if not doc:
                 return self.need_doc()
 
             al = AlsoLikes(self.df)
-            results = al.sort_alsoLikes(doc)
-
-            if len(results) == 0:
-                self.output_box.insert(tk.END, "No related documents found.\n")
-                messagebox.showinfo("No Results", "No 'also-like' documents found for this ID.")
-                return
-
-            try:
-                al.displayGraph(doc, user)
-            except Exception as e:
-                messagebox.showerror("Graph Error", f"Could not generate graph:\n{e}")
-                print(e)
+            al.displayGraph(doc, user)
 
 
     def need_doc(self):

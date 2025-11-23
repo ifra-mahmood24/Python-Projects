@@ -27,8 +27,3 @@ def remove_adjacent(nums):
     return nums
 
 print(remove_adjacent([5,3,3,7,9,1,1])) #why no work TT
-
-
-import graphviz
-graph = graphviz.Source.from_file("test.dot")
-graph.render(filename="testgraph", format="png", cleanup=True, executable=r"C:\Program Files\Graphviz\bin\dot.exe")

@@ -1,18 +1,5 @@
 digraph AlsoLikes {
   rankdir=TB;
   node [fontname="Helvetica"];
-  { rank = same;
-    "2740" [shape=box, label="2740"];
-    "da91" [shape=box, style=filled, fillcolor="green", label="da91"];
-  }
-  { rank = same;
-    "5fb0" [shape=circle, label="5fb0"];
-    "56a0" [shape=circle, label="56a0"];
-    "681c" [shape=circle, style=filled, fillcolor="green", label="681c"];
-  }
-  "da91" -> "681c";
-  "da91" -> "5fb0";
-  "2740" -> "56a0";
-  "da91" -> "56a0";
-  "2740" -> "681c";
+  "c026" [shape=circle, style=filled, fillcolor="green", label="c026"];
 }
