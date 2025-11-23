@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+import numpy as np
 class ViewByCountry:
     def __init__(self, df_copy):
         self.df_copy = df_copy
@@ -91,9 +91,15 @@ class ViewByCountry:
 
         labels = list(data.keys())
         values = list(data.values())
+
         plt.figure(figsize=(10, 5))
         plt.bar(labels, values)
+
+        max_val = max(values)
+        plt.yticks(np.arange(0, max_val + 1, 1))
         plt.xticks(rotation=90)
+        plt.xlabel("Country")
+        plt.ylabel("Number of Views")
         plt.title(title)
         plt.tight_layout()
         plt.show()
