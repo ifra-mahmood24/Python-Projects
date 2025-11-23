@@ -1,5 +1,15 @@
 digraph AlsoLikes {
   rankdir=TB;
   node [fontname="Helvetica"];
-  "c026" [shape=circle, style=filled, fillcolor="green", label="c026"];
+  "9f84" [shape=circle, label="9f84"];
+  "cb53" [shape=circle, label="cb53"];
+  "3119" [shape=circle, label="3119"];
+  "304f" [shape=circle, label="304f"];
+  "c4ca" [shape=circle, style=filled, fillcolor="green", label="c4ca"];
+  "d5da" [shape=box, style=filled, fillcolor="green", label="d5da"];
+  "d5da" -> "9f84";
+  "d5da" -> "cb53";
+  "d5da" -> "c4ca";
+  "d5da" -> "304f";
+  "d5da" -> "3119";
 }

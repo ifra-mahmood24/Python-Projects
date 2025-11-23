@@ -163,9 +163,10 @@ class GUI:
         elif "5d" in task:
             if not doc:
                 return self.need_doc()
-            results = al.alsoLikes(doc, sort_func=al.sort_by_common_readers)
-            top10 = results[:10]
-            self.output_box.insert(tk.END, str(top10))
+            results = al.sort_alsoLikes(doc) 
+            self.output_box.insert(tk.END, "Top 10 Also-Likes:\n\n")
+            for d, c in results:
+                self.output_box.insert(tk.END, f"{d}   ({c} shared readers)\n")
 
         elif "6" in task:
             if not doc:
@@ -173,6 +174,18 @@ class GUI:
 
             al = AlsoLikes(self.df)
             al.displayGraph(doc, user)
+            results = al.sort_alsoLikes(doc)
+
+            if len(results) == 0:
+                self.output_box.insert(tk.END, "No related documents found.\n")
+                messagebox.showinfo("No Results", "No 'also-like' documents found for this ID.")
+                return
+
+            try:
+                al.displayGraph(doc, user)
+            except Exception as e:
+                messagebox.showerror("Graph Error", f"Could not generate graph:\n{e}")
+                print(e)
 
 
     def need_doc(self):

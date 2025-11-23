@@ -58,17 +58,17 @@ class AlsoLikes:
         sorted_pairs = sorted(pairs, key=sort_func)
         return sorted_pairs[:10]  # keep (doc, count)
 
-    def displayGraph(self, docuuid, visuuid="", topN=10):
+    def displayGraph(self, doc_UUID, visitor_UUID="", topN=10):
         from GraphGenerator import GraphGenerator
         
-        results = self.alsoLikes(docuuid)
+        results = self.sort_alsoLikes(doc_UUID)
         likedDocs = [doc for doc, _ in results[:topN]]
 
         gg = GraphGenerator(self.df_copy)
         dotFile = gg.write_dot_file(
-            main_doc=docuuid,
+            main_doc=doc_UUID,
             liked_docs=likedDocs,
-            highlight_reader=visuuid,
+            highlight_reader=visitor_UUID,
             filename="also_likes.dot"
         )
 
