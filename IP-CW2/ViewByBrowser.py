@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from HistogramGenerator import HistogramGenerator
 class ViewByBrowser:
     def __init__(self, df_copy):
         self.df_copy = df_copy
@@ -12,5 +15,50 @@ class ViewByBrowser:
             browser_counts[browser] = browser_counts.get(browser, 0) + count
         return browser_counts
 
-    def displayHistogram():
-        pass
+    def displayUserAgents(self, counts):
+        HistogramGenerator.plot(
+            data=counts,
+            title="Browser Histogram",
+            xlabel="Browser (Full User Agent)",
+            ylabel="Number of Visitors"
+        )
+
+    def displaySimplified(self, counts):
+        HistogramGenerator.plot(
+            data=counts,
+            title="Simplified Browser Histogram",
+            xlabel="Browser Name",
+            ylabel="Number of Visitors"
+        )
+
+    def displayHistogram(self, data, title="Histogram"):
+        if data is None:
+            print("No data to display")
+            return
+        
+        if hasattr(data, "to_dict"):
+            data = data.to_dict()
+
+        if not isinstance(data, dict):
+            try:
+                data = dict(data)
+            except Exception:
+                print("Could not convert data to dictionary for histogram")
+
+        if len(data) == 0:
+            print("No data to display")
+
+        labels = list(data.keys())
+        values = list(data.values())
+
+        plt.figure(figsize=(10,5))
+        plt.bar(labels, values)
+
+        max_val = max(values)
+        plt.yticks(np.arange(0, max_val + 1, 1))
+        plt.xticks(rotation=90)
+        plt.xlabel("Continent")
+        plt.ylabel("Number of Visitors")
+        plt.title(title)
+        plt.tight_layout()
+        plt.show()
