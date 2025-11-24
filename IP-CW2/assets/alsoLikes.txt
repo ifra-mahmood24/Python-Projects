@@ -1,0 +1,17 @@
+    [reader1, reader2, reader3] -> mainDoc
+
+    [doc1,              doc2,                         	doc3,                     doc4]
+        |                |                              |                          |
+        \/               |                              |
+                         |                              |                          |
+reader1, reader2        \ /                             |                          |
+                      reader1, reader4, reader6         \/                         |
+                                            reader1, reader3, reader4              |
+                                                                                  \/
+                                                                 reader1, reader2, reader3, reader7
+
+doc4
+doc1
+doc3
+doc2
+
