@@ -20,7 +20,7 @@ def main():
     df = DataExtractor().load(args.file_name)
 
     tm = TaskManager()
-    output = tm.run_task(args.user_uuid, args.doc_uuid, args.task_id, df)
+    output = tm.run_task(args.user_uuid, args.doc_uuid, args.task_id, df, args.file_name)
     print(output)
 
 if __name__ == "__main__":
