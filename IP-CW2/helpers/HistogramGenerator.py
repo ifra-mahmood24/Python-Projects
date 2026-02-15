@@ -30,10 +30,6 @@ class HistogramGenerator:
         plt.figure(figsize=(10, 5))
         plt.bar(labels, values)
 
-        # Whole-number axis
-        max_val = max(values)
-        plt.yticks(np.arange(0, max_val + 1, 1))
-
         # Rotate labels for readability
         plt.xticks(rotation=90, ha="right")
 

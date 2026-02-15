@@ -25,7 +25,7 @@ class TaskManager():
             print("Invalid task id")
             return
         
-        return handler(user_uuid, doc_uuid, task_id, df, file_name)
+        return handler(user_uuid, doc_uuid, df, file_name)
     
     def require_doc(self, doc_uuid):
         if not doc_uuid:
@@ -63,7 +63,7 @@ class TaskManager():
     
     def task_4(self, user_uuid, doc_uuid, df, file_name=""):
         ar = AvidReaders(df)
-        return ar.getTableOfReaders(ar)
+        return ar.getTableOfReaders()
     
     def task_5d(self, user_uuid, doc_uuid, df, file_name=""):
         al = AlsoLikes(df)
